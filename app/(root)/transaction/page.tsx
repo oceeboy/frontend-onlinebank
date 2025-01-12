@@ -11,11 +11,8 @@ import { Transaction } from "@/types";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // For handling URL query parameters
 import { useAccount } from "@/hooks/getUser";
-// import TransactionSideSheet from "@/components/modal/TransactionSheet";
-// import TransactionSideView from "@/components/modal/TransactionSideView";
 
 const TransactionHistory = () => {
-  // const router = useRouter();
   const searchParams = useSearchParams();
 
   const pageFromUrl = Number(searchParams.get("page")) || 1; // Get 'page' from URL or default to 1
