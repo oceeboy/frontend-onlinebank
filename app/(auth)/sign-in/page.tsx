@@ -63,9 +63,9 @@ function SignInPage() {
     <section className="auth-form">
       <header className="flex flex-col gap-5 md:gap-8">
         <Link href="/" className="flex cursor-pointer items-center gap-2 ">
-          {/* <Image src="/icons/logo.svg" width={34} height={34} alt="Ocee Bank" /> */}
+          {/* <Image src="/icons/logo.svg" width={34} height={34} alt="legeman Bank" /> */}
           <h1 className="text-26 font-bold font-ibm-plex-serif text-black-1">
-            Ocee Bank
+            Legeman Bank
           </h1>
         </Link>
         <div className="flex flex-col gap-1 md:gap-3">

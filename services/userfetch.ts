@@ -5,7 +5,7 @@ import { HTTPError } from "ky";
 const fetchUser = async (): Promise<User> => {
   try {
     // Perform the API request
-    const response = await http.get("auth/me");
+    const response = await http.get("auth/user");
 
     // Parse and return the JSON data
     return await response.json();

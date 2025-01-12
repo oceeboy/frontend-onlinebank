@@ -20,7 +20,7 @@ async function register({ ...data }: SignUpSchema) {
     return { success: false, message: "Invalid request" };
   }
   try {
-    const result = await http.post("auth/register", { json: data });
+    const result = await http.post("auth/signup", { json: data });
     const response: TokenResponse = await result.json();
 
     // Store access token, refresh token, and user data in Zustand store

@@ -44,7 +44,7 @@ const DashboardPage = () => {
       </div>
 
       {UserAccount && (
-        <RightSidebar user={UserAccount} transactions={Transdata || []} />
+        <RightSidebar user={UserAccount || {}} transactions={Transdata || []} />
       )}
     </section>
   );

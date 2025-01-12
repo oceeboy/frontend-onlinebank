@@ -6,7 +6,7 @@ import { HTTPError } from "ky";
 
 const fetchTrasactions = async (): Promise<Transaction[]> => {
   try {
-    const response = await http.get("transaction/all");
+    const response = await http.get("transaction/usertrans");
     if ("error" in response) {
       throw new Error("something went wrong");
     }
@@ -27,30 +27,35 @@ const createTransaction = async (
   try {
     // Send the POST request to create a transaction
     const response = await http
-      .post<TransactionResponse>("transaction/withdraw", {
+      .post<TransactionResponse>("transaction/create", {
         json: transactionDto,
       })
       .json<TransactionResponse>();
 
+    // Directly throw the error if there's an error field in the response
     if ("error" in response) {
-      throw new Error("something went wrong");
+      throw new Error(
+        typeof response.error === "string" ? response.error : "Unknown error"
+      );
     }
     return response;
   } catch (error: unknown) {
-    // Handle errors gracefully
+    // Handle HTTP errors specifically
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json();
-      throw new Error(
-        errorBody.message ||
-          `Failed to create transaction ${error.response.status}`
-      );
+      const errorMessage = errorBody?.error || "An unexpected error occurred";
+      throw new Error(errorMessage);
     }
 
-    // For any other type of error
-    throw error;
+    // For any other type of error, such as network errors
+    if (error instanceof Error) {
+      throw new Error(`Error: ${error.message}`);
+    }
+
+    // Fallback for unknown errors
+    throw new Error("An unknown error occurred");
   }
 };
-
 {
   /** */
 }
