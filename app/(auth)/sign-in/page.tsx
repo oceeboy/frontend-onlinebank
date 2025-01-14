@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/wrapper/FormField";
-import { login } from "@/lib/actions/user.actions";
+import { useAuthentication } from "@/lib/actions/user.actions";
+
 import { signInSchema } from "@/schemas/auth.schema";
 import useAuthStore from "@/store/auth/auth";
 import { SignInSchema } from "@/types/validation";
@@ -13,6 +14,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+// to work on
 function SignInPage() {
   const {
     control,
@@ -39,13 +41,12 @@ function SignInPage() {
     }
   }
 
+  const { login } = useAuthentication();
   //   const isdisabled = Object.keys(errors).length > 0;
   const onSubmit = async (data: SignInSchema) => {
     setIsDisabled(true);
     setResponseMessage(null);
-
     const result = await login(data);
-
     if (result.success) {
       if (authData?.role === "admin") {
         router.replace("/admin");

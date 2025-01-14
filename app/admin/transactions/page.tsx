@@ -1,13 +1,11 @@
 "use client";
 
 import HeaderBox from "@/components/homecomp/HeaderBox";
-import EditTranactionDetails from "@/components/modal/EditTranactionDetails";
 import { Pagination } from "@/components/transaction/Pagination";
 import TransactionsTable from "@/components/transaction/TransactionsTable";
 import { Button } from "@/components/ui/button";
 import { useAdminUserTransactions } from "@/hooks/admin/useAdmin";
 import { useSearchParams } from "next/navigation";
-
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -34,7 +32,15 @@ const UserTransactionsPage = () => {
     ? data.slice(indexOfFirstTransaction, indexOfLastTransaction)
     : [];
 
-  if (isLoading) return <p>Loading transactions...</p>;
+  if (isLoading)
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-gray-100">
+        <div className="flex flex-col items-center space-y-2">
+          <div className="h-8 w-8  animate-spin rounded-full border-4 border-primary-main border-t-bankGradient"></div>
+          <p className="text-sm text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   if (error) return <p>Error loading transactions: {error.message}</p>;
 
   return (
@@ -52,7 +58,6 @@ const UserTransactionsPage = () => {
       >
         Back to Dashboard
       </Button>
-      <EditTranactionDetails />
       <div className="space-y-6">
         <section className="flex w-full flex-col gap-6">
           <TransactionsTable transactions={currentTransactions} />

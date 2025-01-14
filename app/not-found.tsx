@@ -17,6 +17,7 @@ export default function NotFound() {
     >
       <div style={styles.container}>
         <h1 style={styles.heading}>404 - Page Not Found</h1>
+        {/* <Image src="/icons/not_found.svg" alt="Not Found" fill /> */}
         <p style={styles.description}>
           Oops! The page you&lsquo;re looking for doesn&apos;t exist.
         </p>

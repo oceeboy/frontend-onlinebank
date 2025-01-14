@@ -19,6 +19,11 @@ import {
 } from "@/types";
 import { useState } from "react";
 import TransactionSideView from "../modal/TransactionSideView";
+import useAuthStore from "@/store/auth/auth";
+import TestDialogEdit from "../modal/TestDialog";
+import { useDeleteTransaction } from "@/hooks/admin/useAdmin";
+import { Trash2Icon } from "lucide-react";
+import { Button } from "../ui/button";
 
 export const transactionStatusStyles = {
   approved: {
@@ -69,10 +74,18 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
 
+  const { data: UserDetails } = useAuthStore();
+
+  const { mutate, isPending } = useDeleteTransaction();
+
   const handleRowClick = (transaction: Transaction) => {
     setSelectedTransaction(transaction);
   };
 
+  const deleteTransaction = (id: string) => {
+    mutate({ transactionId: id });
+    setSelectedTransaction(null);
+  };
   return (
     <>
       <Table>
@@ -137,8 +150,31 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
       </Table>
 
       {/* Conditionally Render the Side Sheet if a Transaction is Selected */}
-      {selectedTransaction && (
-        <TransactionSideView transaction={selectedTransaction} />
+      {selectedTransaction && UserDetails && (
+        <>
+          {UserDetails.role === "admin" ? (
+            <>
+              <TestDialogEdit data={selectedTransaction as Transaction} />
+              <Button
+                className="border rounded-md  bg-red-600  flex gap-3 justify-center"
+                onClick={() => deleteTransaction(selectedTransaction._id)}
+              >
+                <div>
+                  <Trash2Icon fill="red" stroke="white" />
+                </div>
+                <div className="text-white font-semibold">
+                  {isPending
+                    ? `deleting... ${selectedTransaction.amount}`
+                    : `${formatAmount(selectedTransaction.amount)}`}
+                </div>
+              </Button>
+            </>
+          ) : (
+            <TransactionSideView
+              transaction={selectedTransaction as Transaction}
+            />
+          )}
+        </>
       )}
     </>
   );

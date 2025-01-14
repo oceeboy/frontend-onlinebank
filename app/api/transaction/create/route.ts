@@ -31,7 +31,6 @@ async function findAndValidateUser(userId: string) {
 
 // Helper: Validate last transaction timing
 async function validateLastTransactionTiming(userId: string) {
-  console.log("validatedUser:", userId);
   const lastTransaction = await Transaction.find({ userId })
     .sort({ createdAt: -1 })
     .limit(1)
@@ -66,15 +65,7 @@ export async function POST(req: Request) {
     bic,
     narration,
   }: CreateTransactionDto = await req.json();
-  console.log("Request Body:", {
-    type,
-    amount,
-    code,
-    status,
-    iban,
-    bic,
-    narration,
-  });
+
   try {
     const decodedToken = verify(token, process.env.JWT_SECRET!);
     const userId = decodedToken.sub;

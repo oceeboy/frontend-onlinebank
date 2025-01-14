@@ -1,4 +1,4 @@
-import { logout } from "@/lib/actions/user.actions";
+import { useAuthentication } from "@/lib/actions/user.actions";
 import { FooterProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -6,17 +6,16 @@ import React from "react";
 
 const Footer = ({ user, type = "desktop" }: FooterProps) => {
   const router = useRouter();
+  const { logout } = useAuthentication();
 
   const handleLogOut = async () => {
     await logout();
 
     router.push("/sign-in");
-
-    console.log("User logged out, tokens cleared.");
   };
 
   return (
-    <footer className="footer">
+    <footer onClick={handleLogOut} className="footer">
       <div className={type === "mobile" ? "footer_name-mobile" : "footer_name"}>
         <p className="text-xl font-bold text-gray-700">{user?.firstName[0]}</p>
       </div>
@@ -32,7 +31,7 @@ const Footer = ({ user, type = "desktop" }: FooterProps) => {
         </p>
       </div>
 
-      <div className="footer_image" onClick={handleLogOut}>
+      <div className="footer_image">
         <Image src="icons/logout.svg" fill alt="logout" />
       </div>
     </footer>

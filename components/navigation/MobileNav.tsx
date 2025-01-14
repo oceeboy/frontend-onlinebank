@@ -24,7 +24,7 @@ const MobileNav = () => {
   const { data } = useAccount();
 
   return (
-    <section className="w-fulll max-w-[264px]">
+    <section className="w-full max-w-[264px]">
       <Sheet>
         <SheetTrigger>
           <Image

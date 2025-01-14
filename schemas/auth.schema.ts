@@ -22,12 +22,7 @@ const signUpSchema = z.object({
     .min(2, customMessages.string.min(2))
     .max(255, customMessages.string.max(255)),
   email: z.string().email(customMessages.string.email),
-  dateOfBirth: z
-    .string()
-    .regex(
-      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
-      customMessages.date
-    ),
+  dateOfBirth: z.string().min(1, customMessages.date),
   password: z
     .string()
     .min(8, customMessages.string.min(8))
@@ -81,30 +76,3 @@ const validateSchema = (schema: z.ZodTypeAny, data: unknown) => {
 
 // Export schemas and validation utility
 export { signUpSchema, signInSchema, validateSchema };
-
-/**
- * This schema file defines the validation schemas for the sign-up and sign-in forms.
- * It also includes a utility function to validate data against a schema.
- * @packageDocumentation
- * @module schemas/auth
- * @Example
- * const formData = {
-  firstName: "J",
-  lastName: "Doe",
-  email: "invalid-email",
-  dateOfBirth: "2025-01-02T03:29:33.943Z",
-  password: "1234567",
-  state: "CA",
-  street: "123 Elm St",
-  city: "Somewhere",
-  postalCode: "90210",
-};
-
-const result = validateSchema(SignUpSchema, formData);
-
-if (!result.success) {
-  console.error("Validation errors:", result.errors);
-} else {
-  console.log("Validation passed!");
-}
- */

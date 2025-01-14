@@ -25,8 +25,7 @@ export async function GET(req: Request) {
 
     // Return user data (exclude password for security and others)
     return NextResponse.json(user);
-  } catch (error) {
-    console.error(error);
+  } catch {
     return NextResponse.json(
       { error: "Failed to retrieve user details" },
       { status: 500 }

@@ -19,8 +19,7 @@ export async function GET(req: Request) {
     const transactions = await Transaction.find({ userId }).exec();
 
     return NextResponse.json(transactions, { status: 200 });
-  } catch (error) {
-    console.error(error);
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch transactions" },
       { status: 500 }

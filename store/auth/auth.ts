@@ -1,7 +1,6 @@
 import { User } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import http from "@/lib/ky";
 import ky from "ky";
 
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
@@ -71,7 +70,7 @@ const useAuthStore = create<AuthStore>()(
 
         try {
           // Make API call to refresh the access token
-          const result = await ky.post("auth/refresh-token", {
+          const result = await ky.post("/api/auth/refresh", {
             json: { refreshToken },
           });
 
@@ -93,9 +92,7 @@ const useAuthStore = create<AuthStore>()(
     }),
     {
       name: "auth-store", // Key for Zustand's persisted storage
-      onRehydrateStorage: () => (state) => {
-        console.log("hydrating zustand state:", state);
-      },
+      onRehydrateStorage: () => () => {},
     }
   )
 );

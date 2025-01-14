@@ -12,7 +12,7 @@ export const UserSchema = new Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    dateOfBirth: { type: Date, required: true },
+    dateOfBirth: { type: String, required: true },
     address: {
       street: { type: String, required: true },
       city: { type: String, required: true },

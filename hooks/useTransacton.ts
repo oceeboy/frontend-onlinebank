@@ -16,7 +16,6 @@ export const useCreateTransaction = () => {
     mutationFn: (transactionDto: CreateTransactionDto) =>
       TransactionService.createTransaction(transactionDto),
     onSuccess: (data) => {
-      // console.log("Transaction success:", data); // Log success
       addToast(
         {
           title: "Success!",
@@ -26,7 +25,6 @@ export const useCreateTransaction = () => {
       );
     },
     onError: (error) => {
-      // Handle error: Check if error is an instance of HTTPError
       if (error instanceof Error) {
         addToast(
           {
@@ -57,11 +55,3 @@ export const useCreateTransaction = () => {
     data: mutation.data,
   };
 };
-
-// Check if the response status is not OK (e.g., 4xx or 5xx)
-
-// // Return success message and updated balance
-// return {
-//   message: `Transaction successful! New balance: ${responseData.balance}`,
-//   balance: responseData.balance,
-// };

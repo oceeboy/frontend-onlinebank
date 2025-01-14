@@ -6,12 +6,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { transactionSchema } from "@/schemas/transaction.schema";
 import { UpdateTransactionDto } from "@/types/transaction/transaction.dto";
 import { FormField } from "../wrapper/FormField";
-import { useToaster } from "@/context/toast/ToastContext";
-import { getTRansa } from "@/utils";
+import { Transaction } from "@/types";
+import { useUpdateTransaction } from "@/hooks/admin/useAdmin";
 
-function ProfileForm({ className }: { className: string }) {
-  const data = getTRansa();
-
+function ProfileForm({
+  className,
+  data,
+  setState,
+}: {
+  className: string;
+  data: Transaction;
+  setState: (value: boolean) => void;
+}) {
   const {
     control,
     handleSubmit,
@@ -28,19 +34,11 @@ function ProfileForm({ className }: { className: string }) {
       recipientName: data?.recipientName,
     },
   });
+  const { mutate } = useUpdateTransaction();
 
-  const { addToast } = useToaster();
-
-  const isSubmit = (data: UpdateTransactionDto) => {
-    console.log("Submitted Data:", data); // Log submitted data
-
-    addToast(
-      {
-        title: "Success",
-        description: `Form data logged successfully.`,
-      },
-      "success"
-    );
+  const isSubmit = (ddata: UpdateTransactionDto) => {
+    mutate({ transactionId: data._id, updates: ddata });
+    setState(false);
   };
 
   return (

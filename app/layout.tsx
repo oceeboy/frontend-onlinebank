@@ -3,7 +3,7 @@
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToasterProvider } from "@/context/toast/ToastContext";
 
 import Toaster from "@/components/toaster/Toaster";
@@ -41,6 +41,7 @@ export default function RootLayout({
             {children}
             {/* Devtools for react-query */}
           </ToasterProvider>
+          <ReactQueryDevtools />
         </QueryClientProvider>
       </body>
     </html>

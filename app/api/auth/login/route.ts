@@ -40,8 +40,7 @@ export async function POST(req: Request) {
       access_token: accessToken,
       refresh_token: refreshToken,
     });
-  } catch (error) {
-    console.error(error);
+  } catch {
     return NextResponse.json({ error: "Failed to login" }, { status: 500 });
   }
 }

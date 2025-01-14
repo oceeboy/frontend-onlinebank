@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/wrapper/FormField";
-import { register } from "@/lib/actions/user.actions";
+import { useAuthentication } from "@/lib/actions/user.actions";
 import { signUpSchema } from "@/schemas/auth.schema";
 import useAuthStore from "@/store/auth/auth";
 import { SignUpSchema } from "@/types/validation";
@@ -27,6 +27,8 @@ function SignUpPage() {
   );
   const { data: authData } = useAuthStore();
   const router: AppRouterInstance = useRouter();
+
+  const { register } = useAuthentication();
 
   // const isdisabled = Object.keys(errors).length > 0;
   const onSubmit = async (data: SignUpSchema) => {

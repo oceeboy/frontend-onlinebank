@@ -1,7 +1,4 @@
 import * as React from "react";
-
-// import { cn } from "@/lib/utils";
-// import { useMediaQuery } from "@/hooks/use-media-query"
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -23,10 +20,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import ProfileForm from "../details/EditProfile";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
+import { Transaction } from "@/types";
 
-function TestDialogEdit() {
+function TestDialogEdit({ data }: { data?: Transaction }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
@@ -34,7 +30,9 @@ function TestDialogEdit() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+          <Button className="bg-teal-700 text-white" variant="outline">
+            Edit Profile
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] bg-white">
           <DialogHeader>
@@ -44,7 +42,13 @@ function TestDialogEdit() {
               done.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm className={""} />
+
+          {/** will add a prop so when the save is cick the form dropsdown */}
+          <ProfileForm
+            className={""}
+            data={data as Transaction}
+            setState={setOpen}
+          />
         </DialogContent>
       </Dialog>
     );
@@ -52,7 +56,9 @@ function TestDialogEdit() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button className="bg-teal-700 text-white" variant="outline">
+          Edit Profile
+        </Button>
       </DrawerTrigger>
       <DrawerContent className="bg-white text-black-2">
         <DrawerHeader className="text-left">
@@ -61,7 +67,11 @@ function TestDialogEdit() {
             Make changes to your profile here. Click save when you&apos;re done.
           </DrawerDescription>
         </DrawerHeader>
-        <ProfileForm className="px-4" />
+        <ProfileForm
+          className="px-4"
+          data={data as Transaction}
+          setState={setOpen}
+        />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

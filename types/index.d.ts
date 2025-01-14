@@ -1,15 +1,24 @@
 type AccountType = "savings" | "checking" | "business";
 type Role = "user" | "admin";
+type AccountStatus = "active" | "closed";
 export type User = {
   _id: string;
   firstName: string;
   lastName: string;
+  dateOfBirth: string;
   email: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
   accountNumber: string;
   balance: number;
   currency: string;
   role: Role;
-  accountStatus: string;
+  isFrozen: boolean;
+  accountStatus: AccountStatus;
   kycVerified: boolean;
   accountType: AccountType;
   code: string;

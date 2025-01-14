@@ -8,12 +8,16 @@ const http = ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
-        const { accessToken, refreshTokenFlow } = useAuthStore.getState();
+        const { accessToken, refreshTokenFlow, setStatus } =
+          useAuthStore.getState();
 
         // Check if the access token exists and is expired
         if (accessToken && isTokenExpired(accessToken)) {
-          console.log("Access token expired, refreshing...");
-          await refreshTokenFlow();
+          try {
+            await refreshTokenFlow();
+          } catch {
+            setStatus("unauthenticated");
+          }
         }
 
         // Attach the refreshed or existing access token to the request
@@ -26,25 +30,8 @@ const http = ky.create({
     afterResponse: [
       async (request, options, response) => {
         if (response.status === 401) {
-          console.warn("Unauthorized, attempting token refresh...");
-          const { refreshTokenFlow, resetStore } = useAuthStore.getState();
-
-          try {
-            // Refresh the token and retry the request
-            await refreshTokenFlow();
-            const updatedAccessToken = useAuthStore.getState().accessToken;
-
-            if (updatedAccessToken) {
-              request.headers.set(
-                "Authorization",
-                `Bearer ${updatedAccessToken}`
-              );
-              return ky(request, options); // Retry the request
-            }
-          } catch {
-            console.error("Token refresh failed, resetting auth store.");
-            resetStore(); // Reset auth state if token refresh fails
-          }
+          const { resetStore } = useAuthStore.getState();
+          resetStore();
         }
       },
     ],

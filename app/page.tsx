@@ -2,55 +2,10 @@
 import HeroContent from "@/components/landing/HeroContent";
 import NavBar from "@/components/landing/NavBar";
 import TestDialogEdit from "@/components/modal/TestDialog";
-// import axios from "axios";
-// import ky from "ky";
 
 import React from "react";
 
 const LandingPage = () => {
-  // async function loginUser() {
-  //   try {
-  //     const response = await ky
-  //       .post("https://bbanking-online.vercel.app/auth/login", {
-  //         json: {
-  //           email: "john.doe@example.com",
-  //           password: "password123",
-  //         },
-  //       })
-  //       .json(); // Parse the response as JSON
-
-  //     console.log(response); // Log the response data
-  //   } catch (error) {
-  //     console.error("Login failed:", error); // Handle the error
-  //   }
-  // }
-
-  // loginUser();
-
-  /**
-   * fetch('https://bbanking-online.vercel.app/auth/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    email: 'john.doe@example.com',
-    password: 'password123',
-  }),
-})
-  .then((response) => response.json()) // Parse response as JSON
-  .then((data) => {
-    console.log('Response:', data); // Log the response data
-  })
-  .catch((error) => {
-    console.error('Error:', error); // Handle any errors
-  });
-
-
-
-
-   */
-  /** usng media query will help when creating the landing page for dynamic displays */
   return (
     <section className="h-screen w-screen ">
       <div style={{ position: "fixed", width: "100%" }}>

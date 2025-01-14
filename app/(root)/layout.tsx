@@ -37,10 +37,12 @@ const RootLayout: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <main className="flex h-screen w-full font-inter">
       <Sidebar />
-      <div className="flex flex-1 flex-col">
+      <div className="flex size-full flex-col">
         <div className="root-layout">
           <Image src="/globe.svg" width={30} height={30} alt="logo" />
-          <MobileNav />
+          <div>
+            <MobileNav />
+          </div>
         </div>
         {children}
       </div>
