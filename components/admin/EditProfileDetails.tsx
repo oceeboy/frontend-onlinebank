@@ -17,6 +17,7 @@ export default function UpdateProfileForm({ data }: { data: User }) {
   } = useForm<UpdateProfile>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
+      balance: data.balance,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -54,6 +55,15 @@ export default function UpdateProfileForm({ data }: { data: User }) {
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-xl font-semibold mb-4">Update Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={control}
+          name="balance"
+          label="Balance"
+          placeholder="Enter your an amount"
+          required
+          errorMessage={errors.balance?.message}
+          textParseInt
+        />
         <FormField
           control={control}
           name="firstName"

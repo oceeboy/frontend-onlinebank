@@ -11,6 +11,7 @@ const updateProfileSchema = z.object({
     state: z.string().min(1, "State is required"),
     postalCode: z.string().min(1, "Postal Code is required"),
   }),
+  balance: z.number(),
   accountStatus: z.enum(["active", "closed"]),
   accountType: z.enum(["savings", "checking", "business"]),
   currency: z.enum([

@@ -126,6 +126,7 @@ declare interface Transaction {
   iban?: string;
   bic?: string;
   recipientName?: string;
+  [key: string]: string | number | boolean | Date | undefined;
 }
 
 declare interface RightSidebarProps {

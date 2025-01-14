@@ -11,6 +11,7 @@ import { Transaction } from "@/types";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // For handling URL query parameters
 import { useAccount } from "@/hooks/getUser";
+import { exportToCSV } from "@/utils";
 
 const TransactionHistory = () => {
   const searchParams = useSearchParams();
@@ -65,6 +66,19 @@ const TransactionHistory = () => {
           title="Transaction History"
           subtext="See your bank details and transactions."
         />
+        <button
+          onClick={() => exportToCSV(transactions, "transactions.csv")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#0070f3",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          Export to CSV
+        </button>
       </div>
 
       <div className="space-y-6">
