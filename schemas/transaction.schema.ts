@@ -33,7 +33,8 @@ export const transactionSchema = z.object({
   bankAddress: z.string().min(5, { message: "Bank address is required" }),
   recipientBankName: z
     .string()
-    .min(3, { message: "Recipient bank name is required" }),
+    .min(3, { message: "Recipient bank name is required" })
+    .optional(),
   recipientName: z
     .string()
     .min(3, { message: "Account name is required" })
