@@ -32,6 +32,8 @@ function ProfileForm({
       iban: data?.iban,
       bic: data?.bic,
       recipientName: data?.recipientName,
+      recipientBankName: data.recipientBankName,
+      bankAddress: data.bankAddress,
     },
   });
   const { mutate } = useUpdateTransaction();

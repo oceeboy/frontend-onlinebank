@@ -50,6 +50,7 @@ export function PaymentTransactionForm() {
   const handleDownload = () => {
     if (transactionData) {
       const doc = new jsPDF();
+      // const dateInfo = formatDateTime(transactionData)
 
       // Bank logo as a Base64 string (replace this with your logo's Base64 value)
       // const bankLogoBase64 = ""; // Add your base64 logo here
