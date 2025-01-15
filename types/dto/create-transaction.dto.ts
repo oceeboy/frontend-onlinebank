@@ -15,4 +15,6 @@ export interface CreateTransactionDto {
   bic?: string;
   recipientName?: string;
   reference?: string;
+  bankAddress?: string;
+  recipientBankName?: string;
 }

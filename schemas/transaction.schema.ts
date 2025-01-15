@@ -22,12 +22,22 @@ const BICSchema = z
 export const transactionSchema = z.object({
   type: TransactionTypeEnum,
   amount: z.number().min(0, { message: "Amount must be a positive number" }),
-  code: z.string().optional(),
+  code: z
+    .string()
+    .max(5, { message: "Enter your 5 unique digit pin" })
+    .optional(),
   status: TransactionStatusEnum,
-  narration: z.string().min(1, { message: "Narration cannot be empty" }),
+  narration: z.string().min(5, { message: "Purpose of transfer is required" }),
   iban: IBANSchema,
   bic: BICSchema,
-  recipientName: z.string().optional(),
+  bankAddress: z.string().min(5, { message: "Bank address is required" }),
+  recipientBankName: z
+    .string()
+    .min(3, { message: "Recipient bank name is required" }),
+  recipientName: z
+    .string()
+    .min(3, { message: "Account name is required" })
+    .optional(),
 });
 /** testing
  * 

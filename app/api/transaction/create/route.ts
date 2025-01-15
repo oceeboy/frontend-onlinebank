@@ -64,6 +64,9 @@ export async function POST(req: Request) {
     iban,
     bic,
     narration,
+    bankAddress,
+    recipientBankName,
+    recipientName,
   }: CreateTransactionDto = await req.json();
 
   try {
@@ -134,6 +137,9 @@ export async function POST(req: Request) {
       narration,
       iban,
       bic,
+      bankAddress,
+      recipientBankName,
+      recipientName,
     });
 
     await newTransaction.save({ session });

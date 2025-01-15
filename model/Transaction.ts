@@ -14,6 +14,8 @@ export interface ITransaction extends Document {
   iban?: string;
   bic?: string;
   recipientName?: string;
+  bankAddress?: string;
+  recipientBankName?: string;
 }
 
 const TransactionSchema = new Schema<ITransaction>(
@@ -36,6 +38,8 @@ const TransactionSchema = new Schema<ITransaction>(
     iban: { type: String },
     bic: { type: String },
     recipientName: { type: String },
+    bankAddress: { type: String },
+    recipientBankName: { type: String },
   },
   { timestamps: true }
 );

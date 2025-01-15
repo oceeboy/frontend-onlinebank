@@ -100,6 +100,7 @@ function SignUpPage() {
             name="dateOfBirth"
             label="Date of Birth"
             placeholder="Enter your Date of Birth"
+            dateBox
             rules={{ required: "Date of Birth is required" }}
             errorMessage={errors.dateOfBirth?.message}
           />

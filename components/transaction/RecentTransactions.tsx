@@ -13,13 +13,17 @@ const RecentTransactions = ({
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1", 10); // Default to page 1 if not present
   const transactionsd = (transactions as Transaction[]) || [];
+
+  const sortedTransactions = [...transactionsd].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
   const rowsPerPage = 2;
   const totalPages = Math.ceil(transactionsd.length / rowsPerPage);
 
   const indexOfLastTransaction = page * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 
-  const currentTransactions = transactionsd.slice(
+  const currentTransactions = sortedTransactions.slice(
     indexOfFirstTransaction,
     indexOfLastTransaction
   );

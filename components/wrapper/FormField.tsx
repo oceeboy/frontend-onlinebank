@@ -21,6 +21,7 @@ interface FormFieldProps<TFieldValues extends FieldValues> {
   required?: boolean;
   secureTextEntry?: boolean;
   textParseInt?: boolean; // Corrected typo
+  dateBox?: boolean;
 }
 
 export function FormField<TFieldValues extends FieldValues>({
@@ -36,6 +37,7 @@ export function FormField<TFieldValues extends FieldValues>({
   required = false,
   secureTextEntry = false,
   textParseInt = false,
+  dateBox = false,
 }: FormFieldProps<TFieldValues>): React.ReactElement {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [height, setHeight] = useState(48); // Default height for input fields
@@ -113,6 +115,8 @@ export function FormField<TFieldValues extends FieldValues>({
                       : "password"
                     : textParseInt
                     ? "number"
+                    : dateBox
+                    ? "date"
                     : "text"
                 }
                 placeholder={placeholder}

@@ -125,7 +125,10 @@ declare interface Transaction {
   updatedAt: Date;
   iban?: string;
   bic?: string;
+  reference?: string;
   recipientName?: string;
+  bankAddress?: string;
+  recipientBankName?: string;
   [key: string]: string | number | boolean | Date | undefined;
 }
 
