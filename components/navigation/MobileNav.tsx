@@ -39,7 +39,16 @@ const MobileNav = () => {
           <SheetTitle></SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <SheetContent side="left" className="border-none bg-white">
+        <SheetContent
+          style={{
+            maxHeight: "100vh", // Adjust as needed to fit your layout
+            overflowY: "auto", // Enables vertical scrolling
+            padding: "1rem",
+            // Optional styling
+          }}
+          side="left"
+          className="border-none bg-white"
+        >
           <Link
             href="/"
             className="cursor-pointer flex items-center gap-1 px-4"
@@ -91,11 +100,10 @@ const MobileNav = () => {
                     </SheetClose>
                   );
                 })}
-                USER
+
+                <Footer type="mobile" user={data as User} />
               </nav>
             </SheetClose>
-
-            <Footer type="mobile" user={data as User} />
           </div>
         </SheetContent>
       </Sheet>

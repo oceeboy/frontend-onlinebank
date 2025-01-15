@@ -17,8 +17,16 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
   const bankAccountNumber = UserDetails?.accountNumber;
   const fullName = `${UserDetails?.firstName} ${UserDetails?.lastName}`;
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+    <div className="flex min-h-screen">
+      <div
+        style={{
+          maxHeight: "90vh", // Adjust as needed to fit your layout
+          overflowY: "auto", // Enables vertical scrolling
+          padding: "1rem",
+          // Optional styling
+        }}
+        className="w-full max-w-md bg-white shadow-lg rounded-lg "
+      >
         {/* Header */}
         {/* <div className="flex items-center justify-between mb-4">
           <button className="text-gray-500">&larr; Back</button>
@@ -40,7 +48,9 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
             <h3 className="text-gray-800 text-xl font-semibold">
               {formatAmount(transaction.amount)}
             </h3>
-            <p className="text-green-600 font-medium">{transaction.status} </p>
+            <p className="text-bankGradient font-medium">
+              {transaction.status}{" "}
+            </p>
             <p className="text-gray-500 text-sm">{dateInfo.dateOnly}</p>
           </div>
 
@@ -52,7 +62,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
               <p className="text-sm font-medium text-gray-500">
                 Recipient Details
               </p>
-              <p className="text-gray-800">I{transaction.recipientName}</p>
+              <p className="text-gray-800">{transaction.recipientName}</p>
               <p className="text-gray-500 text-sm">
                 {transaction.recipientBankName} | {transaction.iban}
               </p>
@@ -80,10 +90,6 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
               </p>
               <p className="text-gray-800">{transaction._id}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Session ID</p>
-              <p className="text-gray-800">100004250115125151125482649707</p>
-            </div>
           </div>
 
           <hr className="my-6" />
@@ -91,24 +97,28 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
           {/* Support Section */}
           <div className="text-center">
             <p className="text-sm text-gray-500 mb-1">Support</p>
-            <p className="text-green-600 font-medium">{bankDetail.bankEmail}</p>
+            <p className="text-bankGradient  font-medium">
+              {bankDetail.bankEmail}
+            </p>
           </div>
 
           <hr className="my-6" />
 
           {/* Footer */}
           <p className="text-xs text-gray-500 text-center">
-            Enjoy a better life with {bankDetail.bankName}. Get free transfers,
-            withdrawals, bill payments, instant loans, and good annual interest
-            on your savings.
-            {bankDetail.bankName} is licensed by the Central Bank of Nigeria and
-            insured by the NDIC.
+            Enjoy a better life with {bankDetail.bankName}. Experience free
+            transfers, seamless withdrawals, easy bill payments, quick loans,
+            and attractive annual interest on your savings.{" "}
+            {bankDetail.bankName} is a trusted institution licensed by BaFin
+            (Federal Financial Supervisory Authority) and adheres to the highest
+            standards of financial security. Your savings are protected under
+            the German Deposit Guarantee Scheme.
           </p>
         </div>
 
         {/* Share Button */}
         <div className="mt-6">
-          <button className="w-full bg-green-500 text-white font-medium py-3 rounded-lg shadow-md hover:bg-green-600">
+          <button className="w-full bg-bankGradient text-white font-medium py-3 rounded-lg shadow-md hover:bg-green-600">
             Share Receipt
           </button>
         </div>

@@ -57,6 +57,7 @@ export const transactionStatusStyles = {
     chipBackgroundColor: "bg-gray-100",
   },
 };
+
 const CategoryBadge = ({ status }: CategoryBadgeProps) => {
   const { borderColor, backgroundColor, textColor, chipBackgroundColor } =
     transactionStatusStyles[status as keyof typeof transactionStatusStyles] ||
@@ -73,19 +74,26 @@ const CategoryBadge = ({ status }: CategoryBadgeProps) => {
 const TransactionsTable = ({ transactions }: TransactionTableProps) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: UserDetails } = useAuthStore();
-
   const { mutate, isPending } = useDeleteTransaction();
 
   const handleRowClick = (transaction: Transaction) => {
     setSelectedTransaction(transaction);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedTransaction(null);
+    setIsModalOpen(false);
   };
 
   const deleteTransaction = (id: string) => {
     mutate({ transactionId: id });
-    setSelectedTransaction(null);
+    closeModal();
   };
+
   return (
     <>
       <Table>
@@ -99,79 +107,70 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions.map((t: Transaction) => {
-            const amount = formatAmount(t.amount);
-            const isDebit = t.type === "withdrawal";
-            const isCredit = t.type === "deposit";
-
-            return (
-              <TableRow
-                key={t._id}
-                className={`${
-                  isDebit || amount[0] === "-" ? "bg-[#FFFBFA]" : "bg-[#F6FEF9]"
-                } cursor-pointer !border-b-DEFAULT`}
-                onClick={() => handleRowClick(t)}
+          {transactions.map((t) => (
+            <TableRow
+              key={t._id}
+              className={cn(
+                t.type === "withdrawal" || formatAmount(t.amount)[0] === "-"
+                  ? "bg-[#FFFBFA]"
+                  : "bg-[#F6FEF9]",
+                "cursor-pointer !border-b-DEFAULT"
+              )}
+              onClick={() => handleRowClick(t)}
+            >
+              <TableCell className="max-w-[250px] pl-2 pr-10">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-14 truncate capitalize font-semibold text-[#344054]">
+                    {removeSpecialCharacters(t.type)}
+                  </h1>
+                </div>
+              </TableCell>
+              <TableCell
+                className={cn(
+                  "pl-2 pr-10 font-semibold",
+                  t.type === "withdrawal" ? "text-[#f04438]" : "text-[#039855]"
+                )}
               >
-                <TableCell className="max-w-[250px] pl-2 pr-10">
-                  <div className="flex items-center gap-3">
-                    <h1 className="text-14 truncate capitalize font-semibold text-[#344054]">
-                      {removeSpecialCharacters(t.type)}
-                    </h1>
-                  </div>
-                </TableCell>
-
-                <TableCell
-                  className={`pl-2 pr-10 font-semibold ${
-                    t.type === "withdrawal"
-                      ? "text-[#f04438]"
-                      : "text-[#039855]"
-                  }`}
-                >
-                  {isDebit ? `-${amount}` : isCredit ? amount : amount}
-                </TableCell>
-
-                <TableCell className="pl-2 pr-10">
-                  <CategoryBadge status={t.status} />
-                </TableCell>
-
-                <TableCell className="min-w-32 pl-2 pr-10">
-                  {formatDateTime(new Date(t.createdAt)).dateTime}
-                </TableCell>
-
-                <TableCell className="pl-2 pr-10 max-md:hidden">
-                  <p className="text-14 text-[#344054] text-pretty">
-                    {t.narration}
-                  </p>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                {t.type === "withdrawal"
+                  ? `-${formatAmount(t.amount)}`
+                  : formatAmount(t.amount)}
+              </TableCell>
+              <TableCell className="pl-2 pr-10">
+                <CategoryBadge status={t.status} />
+              </TableCell>
+              <TableCell className="min-w-32 pl-2 pr-10">
+                {formatDateTime(new Date(t.createdAt)).dateTime}
+              </TableCell>
+              <TableCell className="pl-2 pr-10 max-md:hidden">
+                <p className="text-14 text-[#344054] text-pretty">
+                  {t.narration}
+                </p>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
 
-      {/* Conditionally Render the Side Sheet if a Transaction is Selected */}
+      {/* Conditionally Render the Modal or Side Sheet */}
       {selectedTransaction && UserDetails && (
         <>
           {UserDetails.role === "admin" ? (
             <>
-              <TestDialogEdit data={selectedTransaction as Transaction} />
+              <TestDialogEdit data={selectedTransaction} />
               <Button
-                className="border rounded-md  bg-red-600  flex gap-3 justify-center"
+                className="border rounded-md bg-red-600 flex gap-3 justify-center"
                 onClick={() => deleteTransaction(selectedTransaction._id)}
               >
-                <div>
-                  <Trash2Icon fill="red" stroke="white" />
-                </div>
-                <div className="text-white font-semibold">
-                  {isPending
-                    ? `deleting... ${selectedTransaction.amount}`
-                    : `${formatAmount(selectedTransaction.amount)}`}
-                </div>
+                <Trash2Icon fill="red" stroke="white" />
+                <span className="text-white font-semibold">
+                  {isPending ? `Deleting...` : `Delete`}
+                </span>
               </Button>
             </>
           ) : (
             <TransactionSideView
-              transaction={selectedTransaction as Transaction}
+              transaction={selectedTransaction}
+              initialState={isModalOpen}
             />
           )}
         </>

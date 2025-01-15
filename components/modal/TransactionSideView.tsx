@@ -14,12 +14,18 @@ import TransactionDetails from "../trasanaction-details/TransactionDetails";
 
 interface TransactionSideViewProps {
   transaction: Transaction;
+  initialState?: boolean; // Accepts an initial state for the sheet
 }
 
-const TransactionSideView = ({ transaction }: TransactionSideViewProps) => {
+const TransactionSideView = ({
+  transaction,
+  initialState = false, // Default to false if no initial state is provided
+}: TransactionSideViewProps) => {
+  const [open, setOpen] = React.useState<boolean>(initialState);
+
   return (
-    <section className="w-fulll max-w-[264px]">
-      <Sheet>
+    <section className="w-full max-w-[264px]">
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <div className="flex items-center justify-between capitalize text-primary-500">
             View Details
