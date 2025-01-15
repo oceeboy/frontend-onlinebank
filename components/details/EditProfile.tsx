@@ -48,6 +48,13 @@ function ProfileForm({
     <form
       onSubmit={handleSubmit(isSubmit)}
       className={cn("grid items-start gap-4", className)}
+      style={{
+        maxHeight: "80vh",
+        overflowY: "auto",
+        padding: "1rem",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+      }}
     >
       <div className="grid gap-2">
         <FormField
