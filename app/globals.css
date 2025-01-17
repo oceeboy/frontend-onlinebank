@@ -380,3 +380,20 @@
     @apply text-16 font-semibold text-black-2 max-xl:hidden;
   }
 }
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background-color: currentColor;
+  animation: blink 0.6s steps(1) infinite;
+}
