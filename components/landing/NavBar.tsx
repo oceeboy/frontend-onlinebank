@@ -2,6 +2,7 @@
 
 import { bankDetail } from "@/constants/bankdetails";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -29,7 +30,17 @@ const NavBar = () => {
     <nav className="bg-gradient-to-r from-bankGradient to-slate-800 p-4 text-white">
       <div className="container mx-auto flex justify-between items-center">
         {/* Brand */}
-        <div className="text-2xl font-bold">{bankDetail.bankName}</div>
+        <Link href="/" className="flex cursor-pointer items-center gap-2 ">
+          <Image
+            src="/icons/logo.svg"
+            width={34}
+            height={34}
+            alt={bankDetail.bankName}
+          />
+          <h1 className="text-26 font-bold font-ibm-plex-serif text-white">
+            {bankDetail.bankName}
+          </h1>
+        </Link>
 
         {/* Mobile Menu Toggle */}
         <button

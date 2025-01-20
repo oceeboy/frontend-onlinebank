@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import { formatAmount } from "@/lib/utils";
 import { useTransactionStore } from "@/store/transaction/transaction-store";
 import Modal from "../modal/Modal";
+import { bankDetail } from "@/constants/bankdetails";
 
 export function PaymentTransactionForm() {
   const {
@@ -88,7 +89,7 @@ export function PaymentTransactionForm() {
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
-      doc.text("Bank of Code", 70, 20);
+      doc.text(`${bankDetail.bankName}`, 70, 20);
       doc.setFontSize(14);
       doc.text("Transaction Receipt", 70, 30);
 

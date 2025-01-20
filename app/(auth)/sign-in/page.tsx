@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/wrapper/FormField";
+import { bankDetail } from "@/constants/bankdetails";
 import { useAuthentication } from "@/lib/actions/user.actions";
 
 import { signInSchema } from "@/schemas/auth.schema";
@@ -9,6 +10,7 @@ import useAuthStore from "@/store/auth/auth";
 import { SignInSchema } from "@/types/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -64,9 +66,14 @@ function SignInPage() {
     <section className="auth-form">
       <header className="flex flex-col gap-5 md:gap-8">
         <Link href="/" className="flex cursor-pointer items-center gap-2 ">
-          {/* <Image src="/icons/logo.svg" width={34} height={34} alt="legeman Bank" /> */}
-          <h1 className="text-26 font-bold font-ibm-plex-serif text-black-1">
-            Legeman Bank
+          <Image
+            src="/icons/logo.svg"
+            width={34}
+            height={34}
+            alt={bankDetail.bankName}
+          />
+          <h1 className="text-26 font-bold font-ibm-plex-serif text-bankGradient">
+            {bankDetail.bankName}
           </h1>
         </Link>
         <div className="flex flex-col gap-1 md:gap-3">

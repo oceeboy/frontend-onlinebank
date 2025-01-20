@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Footer from "./footer";
 import useAuthStore from "@/store/auth/auth";
+import { bankDetail } from "@/constants/bankdetails";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -21,10 +22,12 @@ const Sidebar = () => {
             src="/icons/logo.svg"
             width={34}
             height={34}
-            alt="Horizon logo"
+            alt={bankDetail.bankName}
             className="size-[24px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">Horizon</h1>
+          <h1 className="sidebar-logo font-ibm-plex-serif">
+            {bankDetail.bankName}
+          </h1>
         </Link>
 
         {sidebarLinks.map((item) => {

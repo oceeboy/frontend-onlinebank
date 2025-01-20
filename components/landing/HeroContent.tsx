@@ -22,7 +22,9 @@ const HeroContent = () => {
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-4xl font-bold text-gray-800 leading-snug">
             Manage Your Banking with {""}
-            <span className="text-bankGradient">{bankDetail.bankName}</span>
+            <span className="text-bankGradient font-ibm-plex-serif">
+              {bankDetail.bankName}
+            </span>
           </h1>
           <p className="mt-4 text-gray-600">
             <Typewriter

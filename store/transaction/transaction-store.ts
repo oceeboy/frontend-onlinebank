@@ -12,8 +12,8 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
   transactionData: {
     type: TransactionType.WITHDRAWAL,
     amount: 0,
-    narration: "000000",
-    bankAddress: "0000",
+    narration: "",
+    bankAddress: "",
     recipientBankName: "",
     bic: "",
     iban: "",
@@ -29,8 +29,8 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
       transactionData: {
         type: TransactionType.WITHDRAWAL,
         amount: 0,
-        narration: "000000",
-        bankAddress: "0000",
+        narration: "",
+        bankAddress: "",
         recipientBankName: "",
         bic: "",
         iban: "",

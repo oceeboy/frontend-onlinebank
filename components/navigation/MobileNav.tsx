@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import Footer from "./footer";
 import { useAccount } from "@/hooks/getUser";
 import { User } from "@/types";
+import { bankDetail } from "@/constants/bankdetails";
 
 const MobileNav = () => {
   const pathname = usePathname();
@@ -57,10 +58,10 @@ const MobileNav = () => {
               src="/icons/logo.svg"
               width={34}
               height={34}
-              alt="Horizon logo"
+              alt={bankDetail.bankName}
             />
             <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
-              Legeman Bank
+              {bankDetail.bankName}
             </h1>
           </Link>
           <div className="mobilenav-sheet">
