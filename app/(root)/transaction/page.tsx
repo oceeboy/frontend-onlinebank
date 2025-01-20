@@ -89,7 +89,7 @@ const TransactionHistory = () => {
         <div className="transactions-account">
           <div className="flex flex-col gap-2">
             <h2 className="text-18 font-bold text-white">Bank Name</h2>
-            <p className="text-14 text-blue-25">{accountsData.firstName}</p>
+            <p className="text-14 text-blue-25">{accountsData.accountNumber}</p>
             <p className="text-14 font-semibold tracking-[1.1px] text-white">
               ●●●● ●●●● ●●●● {accountsData.accountType}
             </p>

@@ -1,6 +1,7 @@
 "use client";
 import HeaderBox from "@/components/homecomp/HeaderBox";
 import { PaymentTransactionForm } from "@/components/transfer-comp/PaymentTransactionForm";
+// import { TransactionFormPage } from "@/components/transfer-comp/testDatsaa";
 // import TransferForm from "@/components/transfer-comp/TransferForm";
 
 import React from "react";
@@ -15,7 +16,7 @@ const WithdrawPage: React.FC = () => {
 
       <section className="size-full pt-5">
         <PaymentTransactionForm />
-
+        {/* <TransactionFormPage /> */}
         {/* <TransferForm /> */}
       </section>
     </section>
