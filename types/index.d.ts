@@ -129,6 +129,7 @@ declare interface Transaction {
   recipientName?: string;
   bankAddress?: string;
   recipientBankName?: string;
+  transactionDate?: Date;
   [key: string]: string | number | boolean | Date | undefined;
 }
 

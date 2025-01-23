@@ -139,7 +139,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                 <CategoryBadge status={t.status} />
               </TableCell>
               <TableCell className="min-w-32 pl-2 pr-10">
-                {formatDateTime(new Date(t.createdAt)).dateTime}
+                {formatDateTime(new Date(t?.transactionDate as Date)).dateOnly}
               </TableCell>
               <TableCell className="pl-2 pr-10 max-md:hidden">
                 <p className="text-14 text-[#344054] text-pretty">

@@ -39,6 +39,13 @@ export const transactionSchema = z.object({
     .string()
     .min(3, { message: "Account name is required" })
     .optional(),
+  transactionDate: z.preprocess((arg) => {
+    if (typeof arg === "string" || arg instanceof Date) {
+      const date = new Date(arg);
+      return isNaN(date.getTime()) ? undefined : date; // Return undefined for invalid dates
+    }
+    return undefined;
+  }, z.date().optional()),
 });
 /** testing
  * 

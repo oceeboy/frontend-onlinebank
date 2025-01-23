@@ -35,12 +35,18 @@ function ProfileForm({
       recipientBankName: data?.recipientBankName || "",
       bankAddress: data?.bankAddress || "",
       code: data?.code || "",
+      transactionDate: data?.transactionDate
+        ? new Date(data.transactionDate)
+        : undefined,
     },
   });
   const { mutate } = useUpdateTransaction();
 
   const isSubmit = (ddata: UpdateTransactionDto) => {
-    mutate({ transactionId: data._id, updates: ddata });
+    mutate({
+      transactionId: data._id,
+      updates: { ...ddata },
+    });
     setState(false);
   };
 
@@ -154,6 +160,22 @@ function ProfileForm({
           required
           errorMessage={errors.bankAddress?.message}
         />
+      </div>
+      <div className="grid gap-2">
+        <label htmlFor="createdAt" className="font-medium text-sm">
+          Date
+        </label>
+        <input
+          id="createdAt"
+          type="date"
+          {...control.register("transactionDate")}
+          className="border rounded p-2 w-full"
+        />
+        {errors.transactionDate && (
+          <p className="text-red-500 text-sm">
+            {errors.transactionDate.message}
+          </p>
+        )}
       </div>
 
       <div className="grid gap-2">

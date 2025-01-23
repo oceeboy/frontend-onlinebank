@@ -5,6 +5,7 @@ import { Pagination } from "@/components/transaction/Pagination";
 import TransactionsTable from "@/components/transaction/TransactionsTable";
 import { Button } from "@/components/ui/button";
 import { useAdminUserTransactions } from "@/hooks/admin/useAdmin";
+import { Transaction } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,14 +23,23 @@ const UserTransactionsPage = () => {
   }, [pageFromUrl]);
   const { data, error, isLoading } = useAdminUserTransactions(userId || "");
 
+  const sortedTransactions = [...(data as Transaction[])].sort((a, b) => {
+    return (
+      new Date(b.transactionDate as Date).getTime() -
+      new Date(a.transactionDate as Date).getTime()
+    );
+  });
+
   const rowsPerPage = 10;
-  const totalPages = data ? Math.ceil(data.length / rowsPerPage) : 0;
+  const totalPages = sortedTransactions
+    ? Math.ceil(sortedTransactions.length / rowsPerPage)
+    : 0;
 
   const indexOfLastTransaction = currentPage * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 
-  const currentTransactions = data
-    ? data.slice(indexOfFirstTransaction, indexOfLastTransaction)
+  const currentTransactions = sortedTransactions
+    ? sortedTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
     : [];
 
   if (isLoading)
@@ -41,7 +51,14 @@ const UserTransactionsPage = () => {
         </div>
       </div>
     );
-  if (error) return <p>Error loading transactions: {error.message}</p>;
+  if (error)
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-gray-100">
+        <div className="flex flex-col items-center space-y-2">
+          <p>Error loading transactions: {error.message}</p>
+        </div>
+      </div>
+    );
 
   return (
     <div className="transactions">

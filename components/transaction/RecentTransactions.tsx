@@ -15,7 +15,10 @@ const RecentTransactions = ({
   const transactionsd = (transactions as Transaction[]) || [];
 
   const sortedTransactions = [...transactionsd].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return (
+      new Date(b.transactionDate as Date).getTime() -
+      new Date(a.transactionDate as Date).getTime()
+    );
   });
   const rowsPerPage = 2;
   const totalPages = Math.ceil(transactionsd.length / rowsPerPage);

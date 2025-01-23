@@ -140,6 +140,7 @@ export async function POST(req: Request) {
       bankAddress,
       recipientBankName,
       recipientName,
+      transactionDate: Date.now(),
     });
 
     await newTransaction.save({ session });

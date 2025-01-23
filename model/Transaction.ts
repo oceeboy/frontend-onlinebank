@@ -16,6 +16,7 @@ export interface ITransaction extends Document {
   recipientName?: string;
   bankAddress?: string;
   recipientBankName?: string;
+  transactionDate?: Date;
 }
 
 const TransactionSchema = new Schema<ITransaction>(
@@ -40,6 +41,7 @@ const TransactionSchema = new Schema<ITransaction>(
     recipientName: { type: String },
     bankAddress: { type: String },
     recipientBankName: { type: String },
+    transactionDate: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

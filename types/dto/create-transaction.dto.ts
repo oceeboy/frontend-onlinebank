@@ -17,4 +17,5 @@ export interface CreateTransactionDto {
   reference?: string;
   bankAddress?: string;
   recipientBankName?: string;
+  transactionDate?: Date;
 }

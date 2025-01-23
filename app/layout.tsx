@@ -1,12 +1,8 @@
-"use client";
-
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ToasterProvider } from "@/context/toast/ToastContext";
 
-import Toaster from "@/components/toaster/Toaster";
+import type { Metadata } from "next";
+import { bankDetail } from "@/constants/bankdetails";
 
 export const dynamic = "force-dynamic";
 
@@ -21,8 +17,13 @@ const ibmPlexSerif = IBM_Plex_Serif({
   weight: ["400", "700"],
   variable: "--font-ibm-plex-serif",
 });
-
-const queryClient = new QueryClient();
+export const metadata: Metadata = {
+  title: `${bankDetail.bankName}`,
+  description: `${bankDetail.bankName} is a modern banking platform for everyone.`,
+  icons: {
+    icon: "/icons/logo.svg",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -33,16 +34,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${ibmPlexSerif.variable}`}>
         {/* React Query setup */}
-        <QueryClientProvider client={queryClient}>
-          {/* Toaster setup */}
-          <ToasterProvider>
-            <Toaster />
-            {/* Render page content */}
-            {children}
-            {/* Devtools for react-query */}
-          </ToasterProvider>
-          <ReactQueryDevtools />
-        </QueryClientProvider>
+
+        {/* Toaster setup */}
+
+        {/* Render page content */}
+        {children}
+        {/* Devtools for react-query */}
       </body>
     </html>
   );

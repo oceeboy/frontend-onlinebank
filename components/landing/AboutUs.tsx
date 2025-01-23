@@ -22,9 +22,7 @@ const About = () => {
         const response = await fetch("/aboutus.json");
         const data = await response.json();
         setAboutData(data);
-      } catch (error) {
-        console.error("Failed to fetch about us data:", error);
-      }
+      } catch {}
     };
 
     fetchAboutData();

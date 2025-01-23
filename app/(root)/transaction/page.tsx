@@ -56,7 +56,10 @@ const TransactionHistory = () => {
   const transactions = Transdatat as Transaction[];
 
   const sortedTransactions = [...transactions].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return (
+      new Date(b.transactionDate as Date).getTime() -
+      new Date(a.transactionDate as Date).getTime()
+    );
   });
 
   const rowsPerPage = 10;

@@ -2,7 +2,17 @@ import About from "@/components/landing/AboutUs";
 import CardSection from "@/components/landing/CardSection";
 import HeroContent from "@/components/landing/HeroContent";
 import NavBar from "@/components/landing/NavBar";
+import { bankDetail } from "@/constants/bankdetails";
+import type { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: `${bankDetail.bankName} - Welcomes you`,
+  description: `${bankDetail.bankName} is a modern banking platform for everyone.`,
+  icons: {
+    icon: "/icons/logo.svg",
+  },
+};
 
 const LandingPage = () => {
   return (

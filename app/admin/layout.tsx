@@ -1,6 +1,11 @@
 "use client";
 
+import Toaster from "@/components/toaster/Toaster";
+import { ToasterProvider } from "@/context/toast/ToastContext";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClient } from "@/lib/query";
 import useAuthStore from "@/store/auth/auth";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -31,9 +36,19 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   return (
-    <main className="flex h-screen w-full font-inter">
-      <div className="flex size-full flex-col">{children}</div>
-    </main>
+    <>
+      <QueryClientProvider client={queryClient}>
+        {/* Toaster setup */}
+        <ToasterProvider>
+          <Toaster />
+
+          <main className="flex h-screen w-full font-inter">
+            <div className="flex size-full flex-col">{children}</div>
+          </main>
+        </ToasterProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </>
   );
 };
 
