@@ -163,7 +163,8 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
               >
                 <Trash2Icon fill="red" stroke="white" />
                 <span className="text-white font-semibold">
-                  {isPending ? `Deleting...` : `Delete`}
+                  {isPending ? `Deleting...` : `Delete`}{" "}
+                  {formatAmount(selectedTransaction.amount)}
                 </span>
               </Button>
             </>

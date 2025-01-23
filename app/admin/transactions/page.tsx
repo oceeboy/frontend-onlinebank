@@ -5,7 +5,6 @@ import { Pagination } from "@/components/transaction/Pagination";
 import TransactionsTable from "@/components/transaction/TransactionsTable";
 import { Button } from "@/components/ui/button";
 import { useAdminUserTransactions } from "@/hooks/admin/useAdmin";
-import { Transaction } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,24 +20,38 @@ const UserTransactionsPage = () => {
   useEffect(() => {
     setCurrentPage(pageFromUrl);
   }, [pageFromUrl]);
-  const { data, error, isLoading } = useAdminUserTransactions(userId || "");
 
-  const sortedTransactions = [...(data as Transaction[])].sort((a, b) => {
-    return (
-      new Date(b.transactionDate as Date).getTime() -
-      new Date(a.transactionDate as Date).getTime()
-    );
-  });
+  const {
+    data: TransDatas,
+    error,
+    isLoading,
+  } = useAdminUserTransactions(userId || "");
 
+  // Ensure TransDatas is always an array
+  const transactions = Array.isArray(TransDatas) ? TransDatas : [];
+
+  // Safely sort transactions
+  const validTransactions = transactions.filter(
+    (transaction) => transaction.transactionDate
+  );
+
+  const sortedTransactions = validTransactions.length
+    ? [...validTransactions].sort((a, b) => {
+        return (
+          new Date(b.transactionDate as Date).getTime() -
+          new Date(a.transactionDate as Date).getTime()
+        );
+      })
+    : [];
   const rowsPerPage = 10;
-  const totalPages = sortedTransactions
+  const totalPages = sortedTransactions.length
     ? Math.ceil(sortedTransactions.length / rowsPerPage)
     : 0;
 
   const indexOfLastTransaction = currentPage * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 
-  const currentTransactions = sortedTransactions
+  const currentTransactions = sortedTransactions.length
     ? sortedTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
     : [];
 
@@ -46,11 +59,12 @@ const UserTransactionsPage = () => {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-gray-100">
         <div className="flex flex-col items-center space-y-2">
-          <div className="h-8 w-8  animate-spin rounded-full border-4 border-primary-main border-t-bankGradient"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary-main border-t-bankGradient"></div>
           <p className="text-sm text-gray-600">Loading...</p>
         </div>
       </div>
     );
+
   if (error)
     return (
       <div className="flex h-screen w-full items-center justify-center bg-gray-100">
@@ -65,10 +79,10 @@ const UserTransactionsPage = () => {
       <div className="transactions-header">
         <HeaderBox
           title="Transaction History"
-          subtext="See the transactions each user had perform on the Bank"
+          subtext="See the transactions each user had performed on the Bank"
         />
       </div>
-      <h1 className="font-semibold ">Transactions for User {userId}</h1>
+      <h1 className="font-semibold">Transactions for User {userId}</h1>
       <Button
         className="bg-bankGradient hover:bg-black-1 text-white max-lg:w-52"
         onClick={() => router.push("/admin")}
@@ -77,7 +91,8 @@ const UserTransactionsPage = () => {
       </Button>
       <div className="space-y-6">
         <section className="flex w-full flex-col gap-6">
-          <TransactionsTable transactions={currentTransactions} />
+          {/* Ensure transactions passed are always an array */}
+          <TransactionsTable transactions={currentTransactions || []} />
           {totalPages > 1 && (
             <div className="my-4 w-full">
               <Pagination totalPages={totalPages} page={currentPage} />
