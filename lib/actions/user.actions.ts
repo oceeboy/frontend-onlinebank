@@ -1,4 +1,4 @@
-import { SignInSchema, SignUpSchema } from "@/types/validation";
+import { SignInSchema, SignUpSchema, VerifyOtp } from "@/types/validation";
 import { HTTPError } from "ky";
 
 import http from "../ky";
@@ -73,17 +73,14 @@ export const useAuthentication = () => {
     try {
       // Send login request
       const result = await http.post("auth/login", { json: data });
-      const response: TokenResponse = await result.json();
+      const response: { message: string } = await result.json();
 
       // Store access token, refresh token, and user data in Zustand store
-      setAccessToken(response.access_token);
-      setRefreshToken(response.refresh_token);
-      setAuthStatus("authenticated");
-      setData(response.user_details);
+
       addToast(
         {
           title: "Login Successful",
-          description: "Welcome back!",
+          description: response.message,
         },
         "success"
       );
@@ -105,7 +102,77 @@ export const useAuthentication = () => {
       return { success: false, message: errorMessage };
     }
   }
+  //  verify otp
 
+  async function verifyOtp({ ...data }: VerifyOtp) {
+    try {
+      const result = await http.post("auth/verify-otp", { json: data });
+      const response: TokenResponse = await result.json();
+
+      // Store access token, refresh token, and user data in Zustand store
+      setAccessToken(response.access_token);
+      setRefreshToken(response.refresh_token);
+      setAuthStatus("authenticated");
+      setData(response.user_details);
+      addToast(
+        {
+          title: "Login Successful",
+          description: "Welcome back!",
+        },
+        "success"
+      );
+      return { success: true, message: "Login successful", data: response };
+    } catch (error) {
+      const errorMessage =
+        error instanceof HTTPError && error.response?.status === 401
+          ? "Invalid credentials"
+          : "Failed to Verify Otp";
+
+      addToast(
+        {
+          title: "OTP verification Failed",
+          description: errorMessage,
+        },
+        "error"
+      );
+
+      return { success: false, message: errorMessage };
+    }
+  }
+  // generate otp
+
+  async function generateOtp(email: string) {
+    if (!email) {
+      return { success: false, message: "Invalid request" };
+    }
+    try {
+      const result = await http.post("auth/generate-otp", { json: { email } });
+      const response: { message: string } = await result.json();
+      addToast(
+        {
+          title: "Resent Successfull",
+          description: response.message,
+        },
+        "success"
+      );
+      return { success: true, message: "OTP sent successful", data: response };
+    } catch (error) {
+      const errorMessage =
+        error instanceof HTTPError && error.response?.status === 401
+          ? "Invalid credentials"
+          : "Failed to send OTP";
+
+      addToast(
+        {
+          title: "OTP Failed",
+          description: errorMessage,
+        },
+        "error"
+      );
+
+      return { success: false, message: errorMessage };
+    }
+  }
   // logout
 
   async function logout() {
@@ -122,7 +189,7 @@ export const useAuthentication = () => {
     );
   }
 
-  return { register, login, logout };
+  return { register, login, logout, verifyOtp, generateOtp };
 };
 
 async function register({ ...data }: SignUpSchema) {

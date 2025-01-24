@@ -7,6 +7,7 @@ const customMessages = {
     max: (max: number) => `Must be at most ${max} characters long.`,
     email: "Invalid email format.",
     regex: "Invalid format.",
+    otp: "Enter the 6 digit",
   },
   date: "Date must be a valid ISO string in the format YYYY-MM-DDTHH:mm:ss.sssZ.",
 };
@@ -57,6 +58,11 @@ const signInSchema = z.object({
     .max(128, "Password must be at most 128 characters long."),
 });
 
+const verifyOtp = z.object({
+  email: z.string().email(customMessages.string.email),
+  otp: z.string().min(6, customMessages.string.min(6)),
+});
+
 // Example error handling utility
 const validateSchema = (schema: z.ZodTypeAny, data: unknown) => {
   try {
@@ -75,4 +81,4 @@ const validateSchema = (schema: z.ZodTypeAny, data: unknown) => {
 };
 
 // Export schemas and validation utility
-export { signUpSchema, signInSchema, validateSchema };
+export { signUpSchema, signInSchema, validateSchema, verifyOtp };

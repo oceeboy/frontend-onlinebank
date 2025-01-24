@@ -37,6 +37,8 @@ export const UserSchema = new Schema(
     role: { type: String, enum: Object.values(Role), default: Role.User },
     isFrozen: { type: Boolean, default: false },
     otp: { type: String },
+
+    otpExpiresAt: { type: Date },
     accountStatus: {
       type: String,
       enum: Object.values(AccountStatus),
@@ -70,6 +72,7 @@ export interface UserDocument extends Document {
   role: Role;
   isFrozen: boolean;
   otp?: string;
+  otpExpiresAt?: string;
   accountStatus: AccountStatus;
   kycVerified: boolean;
   code?: string;

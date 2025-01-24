@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/wrapper/FormField";
 import { bankDetail } from "@/constants/bankdetails";
 import { useAuthentication } from "@/lib/actions/user.actions";
-
 import { signInSchema } from "@/schemas/auth.schema";
 import useAuthStore from "@/store/auth/auth";
 import { SignInSchema } from "@/types/validation";
@@ -16,7 +15,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-// to work on
 function SignInPage() {
   const {
     control,
@@ -50,11 +48,7 @@ function SignInPage() {
     setResponseMessage(null);
     const result = await login(data);
     if (result.success) {
-      if (authData?.role === "admin") {
-        router.replace("/admin");
-      } else {
-        router.replace("/dashboard");
-      }
+      router.replace(`/verify-otp?email=${data.email}`);
     } else {
       setResponseMessage("Something went wrong. Please try again.");
     }
