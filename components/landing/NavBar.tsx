@@ -17,12 +17,12 @@ const NavBar = () => {
       route: "#about",
     },
     {
-      label: "Services",
-      route: "#services",
+      label: "Login",
+      route: "/sign-in",
     },
     {
-      label: "Contact",
-      route: "#contact",
+      label: "Open an account",
+      route: "/sign-up",
     },
   ];
 

@@ -1,5 +1,6 @@
 import About from "@/components/landing/AboutUs";
-import CardSection from "@/components/landing/CardSection";
+// import CardSection from "@/components/landing/CardSection";
+import Footer from "@/components/landing/Footer";
 import HeroContent from "@/components/landing/HeroContent";
 import NavBar from "@/components/landing/NavBar";
 import { bankDetail } from "@/constants/bankdetails";
@@ -36,13 +37,14 @@ const LandingPage = () => {
           <About />
         </section>
 
-        <section
+        {/* <section
           id="testimonials"
           className="py-20 container mt-40 mx-auto px-4 sm:px-8 text-center"
         >
           <CardSection cards={[]} />
-        </section>
+        </section> */}
       </main>
+      <Footer />
     </section>
   );
 };

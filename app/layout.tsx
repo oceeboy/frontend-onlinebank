@@ -40,6 +40,7 @@ export default function RootLayout({
         {/* Render page content */}
         {children}
         {/* Devtools for react-query */}
+        <script src="//code.jivosite.com/widget/XjcRAhwyMW" async></script>
       </body>
     </html>
   );
