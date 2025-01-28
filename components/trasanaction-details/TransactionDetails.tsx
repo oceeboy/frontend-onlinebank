@@ -2,6 +2,7 @@ import { bankDetail } from "@/constants/bankdetails";
 import { useAccount } from "@/hooks/getUser";
 import { formatAmount, formatDateTime } from "@/lib/utils";
 import { Transaction } from "@/types";
+import Image from "next/image";
 import React from "react";
 
 interface TransactionDetailsProps {
@@ -39,7 +40,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-blue-100 flex items-center justify-center rounded-full">
               {/* Replace this div with an <img> tag for the logo */}
-              <span className="text-xl font-bold text-blue-600">Logo</span>
+              <Image src="/icons/logo.svg" width={30} height={30} alt="logo" />
             </div>
           </div>
 
@@ -117,11 +118,11 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
         </div>
 
         {/* Share Button */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <button className="w-full bg-bankGradient text-white font-medium py-3 rounded-lg shadow-md hover:bg-green-600">
             Share Receipt
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
